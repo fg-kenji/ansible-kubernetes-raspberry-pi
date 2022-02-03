@@ -1,0 +1,7 @@
+- name: Enable add-ons
+  shell: |
+    sudo microk8s enable dns:/etc/resolv.conf registry storage ingress
+
+- name: Enable Sealed secret controller
+  shell: |
+    sudo microk8s.kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.15.0/controller.yaml

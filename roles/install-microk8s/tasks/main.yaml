@@ -1,0 +1,10 @@
+- name: install microk8s
+  shell: |
+       sudo snap install microk8s --classic
+
+- name: start kubernetes
+  shell: microk8s start
+
+#- name: disable ha-cluster
+#  shell: |
+#    sudo microk8s disable ha-cluster --force

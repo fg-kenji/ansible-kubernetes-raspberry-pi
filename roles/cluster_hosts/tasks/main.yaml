@@ -1,0 +1,6 @@
+---
+- name: Create a vitual cluster_hosts by editing etc/hosts file.
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{ item }}"
+  with_items: "{{ hostvars }}"

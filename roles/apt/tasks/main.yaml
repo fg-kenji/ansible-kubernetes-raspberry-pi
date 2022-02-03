@@ -1,0 +1,16 @@
+---
+- name: update apt
+  shell: |
+       sudo apt update
+
+- name: full upgrade
+  apt:
+    upgrade: full
+
+- name: Install essential packages
+  apt:
+    pkg:
+      - git
+    update_cache: yes
+    cache_valid_time: 3600
+    state: latest

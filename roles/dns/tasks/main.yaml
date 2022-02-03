@@ -1,0 +1,5 @@
+---
+- name: Add name servers
+  copy:
+    src: ../src/resolv.conf
+    dest: /etc/resolv.conf

@@ -1,0 +1,22 @@
+---
+# In first login, connection should file because default user cannot be used with default password.
+# This tasks catch unreachable event.
+- name: "Check if host is reachable"
+  wait_for:
+    timeout: 0
+  register: connect_rs
+  ignore_unreachable: yes
+
+# If previous tasks was unreachable, then localhost try to connect to server with ssh.
+# and change default password for default user.
+- when: connect_rs is unreachable
+  become: false
+  name: "Try first login and change the password"
+  delegate_to: localhost
+  expect:
+    command: sshpass -p {{ default_user }} ssh {{ default_user }}@{{ hostvars[inventory_hostname].ansible_host }}
+    timeout: 10
+    responses:
+      "Current password:": "{{ default_user }}"
+      "New password:": "{{ ansible_ssh_pass }}"
+      "Retype new password:": "{{ ansible_ssh_pass }}"

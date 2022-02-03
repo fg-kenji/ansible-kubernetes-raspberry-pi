@@ -1,0 +1,15 @@
+- name: Get kubeseal public key
+  shell: |
+    mark="tls.crt: "
+    tls=$(sudo microk8s.kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml | grep "$mark")
+    echo $tls | grep -oP "^$mark\K.*" | base64 -d > sealed-secret.pem
+
+- name: fetch pem file
+  fetch:
+    src: sealed-secret.pem
+    dest: pem
+
+- name: delete pem file in remote
+  file:
+    state: absent
+    path: sealed-secret.pem

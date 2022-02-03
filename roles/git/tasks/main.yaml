@@ -1,0 +1,28 @@
+- name: Create ssh directory
+  file:
+    path: "/home/{{ ansible_user }}/.ssh"
+    state: directory
+
+- name: Pass ssh config
+  copy:
+    src: ../src/config
+    dest: "/home/{{ ansible_user }}/.ssh/config"
+
+- name: replace github_user
+  replace:
+    dest: /etc/netplan/50-cloud-init.yaml
+    regexp: 'github_user'
+    replace: "{{ github_user }}"
+    backup: yes
+
+- name: replace host
+  replace:
+    dest: /etc/netplan/50-cloud-init.yaml
+    regexp: 'host'
+    replace: "{{ansible_host}}"
+    backup: yes
+
+- name: Pass private key
+  copy:
+    src: ~/.ssh/github/github_rsa
+    dest: "/home/{{ ansible_user }}/.ssh/github_rsa"

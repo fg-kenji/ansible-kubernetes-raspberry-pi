@@ -1,0 +1,26 @@
+# Make each raspberry has static ip address.
+---
+- name: Upload template yaml file.
+  copy:
+    src: ../src/template.yaml
+    dest: /etc/netplan/50-cloud-init.yaml
+
+- name: replace host
+  replace:
+    dest: /etc/netplan/50-cloud-init.yaml
+    regexp: 'host'
+    replace: "{{ansible_host}}/24"
+    backup: yes
+
+- name: replace gateway
+  replace:
+    dest: /etc/netplan/50-cloud-init.yaml
+    regexp: 'my_gateway'
+    replace: "{{my_gateway}}"
+    backup: yes
+
+- name: Apply netplan
+  command: netplan apply
+  # execute command asynchronously.
+  async: 45
+  poll: 0

@@ -1,0 +1,13 @@
+- name: get join node command from master node.
+  shell: |
+    sudo microk8s.add-node | grep "microk8s join" | head -1 > join-node.sh
+
+- name: fetch join-node file
+  fetch:
+    src: join-node.sh
+    dest: join-node
+
+- name: delete join-node file in remote
+  file:
+    state: absent
+    path: join-node.sh

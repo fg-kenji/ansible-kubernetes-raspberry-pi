@@ -1,0 +1,55 @@
+---
+- name: create user
+  hosts: all
+  vars:
+    ansible_ssh_user: "{{ default_user }}"
+  become: yes
+  gather_facts: false
+  vars_files:
+    - vars/main.yaml
+
+  roles:
+    - default_user
+    - user
+
+- name: initialize ubuntu server
+  hosts: all
+  become: yes
+  gather_facts: false
+  vars_files:
+    - vars/main.yaml
+
+  roles:
+    - hostname
+    - dns
+    - apt
+    - static_ip
+    - cgroup
+    - install-microk8s
+
+- name: initialize manager
+  hosts: master-pi
+  become: yes
+  gather_facts: false
+  vars_files:
+    - vars/main.yaml
+
+  roles:
+    - enable-microk8s-add-on
+    - git
+    - git-pull
+#    - install-nodejs-npm
+    - install-docker
+    - kubeseal-public-key
+    - get-node-join-command
+
+
+- name: join node
+  hosts: nodes
+  become: yes
+  gather_facts: false
+  vars_files:
+    - vars/main.yaml
+
+  roles:
+    - node-join

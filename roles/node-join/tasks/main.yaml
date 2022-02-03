@@ -1,0 +1,12 @@
+- name: pass join-node.sh
+  copy:
+    src: "../../../join-node/master-pi/join-node.sh"
+    dest: .
+
+- name: execute shell
+  shell: sh join-node.sh
+
+- name: delete join-node shell file
+  file:
+    state: absent
+    path: join-node.sh

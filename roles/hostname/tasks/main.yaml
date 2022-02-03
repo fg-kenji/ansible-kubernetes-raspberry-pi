@@ -1,0 +1,14 @@
+
+- name: Add correct IP address to hosts file
+  replace:
+    dest: /etc/hosts
+    regexp: '^127\.0\.0\.1\slocalhost'
+    replace: "127.0.0.1 localhost {{ inventory_hostname }}"
+  become: yes
+
+- name: Add correct IP address to hosts file
+  replace:
+    dest: /etc/hostname
+    regexp: "{{ default_user }}"
+    replace: "{{ inventory_hostname }}"
+  become: yes

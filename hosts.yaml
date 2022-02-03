@@ -1,0 +1,16 @@
+# set your raspberry pi ip address
+# you can search with 'nmap your_network/24 '
+
+all:
+  hosts:
+    master-pi:
+      ansible_host: 192.168.11.12
+  children:
+    nodes:
+      hosts:
+        second-pi:
+          ansible_host: 192.168.11.13
+        third-pi:
+          ansible_host: 192.168.11.10
+        forth-pi:
+          ansible_host: 192.168.11.9

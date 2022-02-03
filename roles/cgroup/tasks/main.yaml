@@ -1,0 +1,9 @@
+---
+- name: Upload template cmdline.txt.
+  copy:
+    src: ../src/cmdline.txt
+    dest: /boot/firmware/cmdline.txt
+
+- name: reboot to apply cmdline,txt
+  reboot:
+    reboot_timeout: 200

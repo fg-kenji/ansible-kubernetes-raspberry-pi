@@ -1,0 +1,16 @@
+- name: check github.com is in known_hosts
+  shell: "cat /home/{{ ansible_user }}/.ssh/known_hosts | grep github.com"
+  register: known_hosts
+  ignore_errors: true
+
+- name: register github.com to known_host
+  shell: "ssh-keyscan github.com >> /home/{{ ansible_user }}/.ssh/known_hosts"
+  when: known_hosts.failed
+
+- name: Git pull kubernetes-project
+  become: false
+  git:
+    repo: "{{ projects[item].repository }}"
+    dest: "/home/{{ ansible_user }}/{{ projects[item].directory }}"
+    update: true
+  with_items: "{{ projects.keys() }}"

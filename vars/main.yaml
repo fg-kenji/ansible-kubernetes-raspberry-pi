@@ -1,0 +1,9 @@
+---
+
+default_user: ubuntu
+ansible_user: your_favorite_name
+# ssh public key in local environment.
+copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+my_gateway: 192.168.11.1
+ansible_ssh_pass: your_favorite_password
+github_user: your_github_user

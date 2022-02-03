@@ -1,0 +1,17 @@
+- name: download latest node-js set up
+  shell: |
+    sudo curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+
+- name: Install node-js
+  apt:
+    pkg:
+      - nodejs
+    update_cache: yes
+    cache_valid_time: 3600
+    state: latest
+
+
+- name: Install Angular CLI
+  npm:
+    name: "@angular/cli"
+    global: yes
