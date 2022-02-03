@@ -1,7 +1,7 @@
-- name: Enable add-ons
-  shell: |
-    sudo microk8s enable dns:/etc/resolv.conf registry storage ingress
+#- name: Enable add-ons
+#  shell: |
+#    sudo microk8s enable dns:/etc/resolv.conf registry storage ingress helm3
 
 - name: Enable Sealed secret controller
   shell: |
-    sudo microk8s.kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.15.0/controller.yaml
+    sudo microk8s.helm3 repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets

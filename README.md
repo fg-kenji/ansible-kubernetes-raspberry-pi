@@ -1,5 +1,8 @@
 # Ansible Commands
 
+## Install Ansible
+RUN `pip install ansible`
+
 ## Run ansible playbook
 RUN `ansible-playbook main.yaml`
 

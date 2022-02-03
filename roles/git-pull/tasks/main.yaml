@@ -14,3 +14,4 @@
     dest: "/home/{{ ansible_user }}/{{ projects[item].directory }}"
     update: true
   with_items: "{{ projects.keys() }}"
+  when: projects != None
